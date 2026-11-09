@@ -1,0 +1,562 @@
+## EXP2
+
+## PROGRAM 2
+
+abstract class Employee {
+    private int salary = 30000;
+    static String company = "ABC";
+
+    public void show() {
+        System.out.println(salary);
+    }
+
+    abstract void role();
+}
+
+class Developer extends Employee {
+    void role() {
+        System.out.println("Developer");
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Developer d = new Developer();
+        d.show();
+        d.role();
+        System.out.println(Employee.company);
+    }
+}
+
+Aim: To write a Java program demonstrating static and non-static members, 
+access modifiers,abstraction and encapsulation.
+
+Procedure:
+Create an abstract class Employee.
+Declare static and private members.
+Create a public method to display salary.
+Define an abstract method role().
+Extend Employee using Developer class.
+Create an object and display the details.
+
+Result: 
+Thus, the Java program was successfully executed and all five 
+concepts were demonstrated.
+
+##Exp3
+
+Aim: To implement a console-based Java application using Scanner 
+and System classes for input and output processing.
+
+Procedure:
+Import the Scanner class.
+Create a Scanner object to get user input.
+Read the input using Scanner methods.
+Display the output using System.out.println().
+Execute the program and verify the output.
+
+Result: Thus, the Java program using Scanner and System classes 
+was successfully executed.
+
+## PROGRAM 3
+
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter your name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter your age: ");
+        int age = sc.nextInt();
+
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+
+        sc.close();
+    }
+}
+
+##EXP 4
+
+
+Aim
+To write and execute a Java program to demonstrate 
+different types of inheritance.
+
+Procedure
+Create parent and child classes.
+Use extends to implement inheritance.
+Use interfaces for multiple inheritance.
+Create objects and execute the program.
+
+Result
+Thus, the Java program was successfully executed to demonstrate 
+single and multilevel inheritance.
+
+## Program 4
+
+class A {
+    void show() {
+        System.out.println("Parent");
+    }
+}
+
+class B extends A {
+    void display() {
+        System.out.println("Single Inheritance");
+    }
+}
+
+class C extends B {
+    void print() {
+        System.out.println("Multilevel Inheritance");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        C obj = new C();
+        obj.show();
+        obj.display();
+        obj.print();
+    }
+}
+
+##EXP 5
+
+Aim: To implement compile-time and runtime polymorphism 
+using method overloading and method overriding in Java.
+
+## program 5
+
+class Payment {
+    void makePayment(int amount) {
+        System.out.println("Cash Payment: " + amount);
+    }
+
+    void makePayment(double amount) {
+        System.out.println("Online Payment: " + amount);
+    }
+}
+
+class UPIPayment extends Payment {
+    @Override
+    void makePayment(double amount) {
+        System.out.println("UPI Payment: " + amount);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        UPIPayment p = new UPIPayment();
+
+        p.makePayment(500);
+        p.makePayment(750.50);
+    }
+}
+
+Procedure:
+Create a Payment class with multiple makePayment() 
+methods using different parameters.
+
+Create a UPIPayment subclass that extends Payment and 
+overrides the makePayment() method.
+
+Create objects and invoke overloaded and overridden
+methods to demonstrate compile-time and runtime polymorphism.
+
+Display the payment details and stop the program.
+
+Result
+Thus, the Java program was executed successfully and compile-time and
+runtime polymorphism were demonstrated using method overloading and method overriding.
+
+
+## exp 6
+
+## program 6
+
+
+interface RemoteControl {
+    void turnOn();
+    void turnOff();
+}
+
+abstract class Appliance {
+    abstract void displayAppliance();
+}
+
+class SmartTV extends Appliance implements RemoteControl {
+    void displayAppliance() {
+        System.out.println("Appliance: Smart TV");
+    }
+
+    public void turnOn() {
+        System.out.println("TV is turned ON");
+    }
+
+    public void turnOff() {
+        System.out.println("TV is turned OFF");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Appliance a = new SmartTV();
+        SmartTV tv = new SmartTV();
+
+        a.displayAppliance();
+        tv.turnOn();
+        tv.turnOff();
+    }
+}
+
+
+Aim: To implement a Java program using abstract
+classes, interfaces and dynamic method dispatch.
+
+Procedure:
+Create a RemoteControl interface and an abstract Appliance class.
+Create a SmartTV class that extends Appliance and implements RemoteControl.
+Implement all methods and create an object using the parent class reference.
+Invoke the methods and display the appliance details and status.
+
+Result
+Thus, the Java program was executed successfully using abstract classes, 
+interfaces and dynamic method dispatch.
+
+##Experiment No. 08
+
+Aim:
+To implement exception handling in Java using built-in and user-defined exceptions.
+
+
+Procedure:
+Create a user-defined exception named InsufficientBalanceException.
+Read the account balance and withdrawal amount.
+Check the balance and handle exceptions using try, catch and finally.
+Display the updated balance or error message.
+
+
+Result:
+Thus, the Java program for exception handling was successfully executed.
+
+
+
+##Program 8
+
+
+import java.util.*;
+
+class InsufficientBalanceException extends Exception {
+    InsufficientBalanceException(String s) {
+        super(s);
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        double b = sc.nextDouble();
+        double a = sc.nextDouble();
+
+        try {
+            if (a > b)
+                throw new InsufficientBalanceException("Insufficient Balance");
+            System.out.println("Balance: " + (b - a));
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Invalid Input");
+        }
+        catch (InsufficientBalanceException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            System.out.println("Transaction Completed");
+            sc.close();
+        }
+    }
+}
+
+##EXP 9
+
+Aim:
+To develop multithreaded Java applications using
+Thread class and Runnable interface.
+
+
+Procedure:
+Create a ReservationThread class by extending the Thread class.
+Create a StatusThread class by implementing the Runnable interface.
+Override the run() methods to display messages five times with a delay.
+Create and start both threads to execute concurrently.
+
+
+Result:
+Thus, the Java program using Thread class and Runnable 
+interface was successfully executed.
+
+
+## program 9
+
+class ReservationThread extends Thread {
+    public void run() {
+        for(int i=1;i<=5;i++)
+            System.out.println("Ticket Reserved");
+    }
+}
+
+class StatusThread implements Runnable {
+    public void run() {
+        for(int i=1;i<=5;i++)
+            System.out.println("Ticket Confirmed");
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        ReservationThread t1 = new ReservationThread();
+        Thread t2 = new Thread(new StatusThread());
+
+        t1.start();
+        t2.start();
+    }
+}
+
+##EXP 10
+
+Aim:
+To implement synchronized multithreading in Java using synchronization 
+and inter-thread communication.
+
+
+Procedure:
+Create a shared Buffer class with synchronized produce() and consume() methods.
+Use wait() and notify() for communication between threads.
+Create Producer and Consumer classes to produce and consume data.
+Start both threads and display the produced and consumed values.
+
+
+Result:
+Thus, the Java program using synchronization and inter-thread
+communication was successfully executed.
+
+
+##program 10
+
+class Buffer {
+    int data;
+    boolean available = false;
+
+    synchronized void produce(int x) throws Exception {
+        while (available) wait();
+        data = x;
+        System.out.println("Produced: " + data);
+        available = true;
+        notify();
+    }
+
+    synchronized void consume() throws Exception {
+        while (!available) wait();
+        System.out.println("Consumed: " + data);
+        available = false;
+        notify();
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Buffer b = new Buffer();
+
+        Thread p = new Thread(() -> {
+            try {
+                for (int i = 1; i <= 5; i++)
+                    b.produce(i);
+            } catch (Exception e) {}
+        });
+
+        Thread c = new Thread(() -> {
+            try {
+                for (int i = 1; i <= 5; i++)
+                    b.consume();
+            } catch (Exception e) {}
+        });
+
+        p.start();
+        c.start();
+    }
+}
+
+
+##exp 11
+
+Aim:
+To implement synchronized multithreading in Java using
+synchronization and inter-thread communication.
+
+
+Procedure:
+Create a shared Buffer class with synchronized produce() and consume() methods.
+Use wait() and notify() for communication between threads.
+Create Producer and Consumer classes to produce and consume data.
+Start both threads and display the produced and consumed values.
+
+
+Result:
+Thus, the Java program using synchronization and inter-thread 
+communication was successfully executed.
+
+
+## program 11
+
+class Buffer {
+    int data;
+    boolean available = false;
+
+    synchronized void produce(int x) throws Exception {
+        while (available) wait();
+        data = x;
+        System.out.println("Produced: " + data);
+        available = true;
+        notify();
+    }
+
+    synchronized void consume() throws Exception {
+        while (!available) wait();
+        System.out.println("Consumed: " + data);
+        available = false;
+        notify();
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Buffer b = new Buffer();
+
+        Thread p = new Thread(() -> {
+            try {
+                for (int i = 1; i <= 5; i++)
+                    b.produce(i);
+            } catch (Exception e) {}
+        });
+
+        Thread c = new Thread(() -> {
+            try {
+                for (int i = 1; i <= 5; i++)
+                    b.consume();
+            } catch (Exception e) {}
+        });
+
+        p.start();
+        c.start();
+    }
+}
+
+
+##exp12
+
+Aim:
+To implement a Java application using List, Set, Map and Queue interfaces.
+
+
+Procedure:
+Create an ArrayList and HashSet to store elements.
+Create a HashMap to store student roll numbers and names.
+Create a LinkedList using the Queue interface.
+Display the collections and remove an element using poll().
+
+
+Result:
+Thus, the Java program using List, Set, Map and Queue interfaces
+was successfully executed.
+
+##program 12
+
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("Gokul");
+        list.add("Arun");
+        System.out.println("List: " + list);
+
+        Set<String> set = new HashSet<>();
+        set.add("Java");
+        set.add("Python");
+        System.out.println("Set: " + set);
+
+        Map<Integer, String> map = new HashMap<>();
+        map.put(101, "Gokul");
+        map.put(102, "Arun");
+        System.out.println("Map: " + map);
+
+        Queue<String> q = new LinkedList<>();
+        q.offer("Ram");
+        q.offer("Sam");
+        System.out.println("Queue: " + q);
+        System.out.println("Removed: " + q.poll());
+    }
+}
+
+
+## exp 13
+
+Aim:
+To implement customized sorting in Java using
+Comparable and Comparator interfaces.
+
+
+Procedure:
+Create a Student class with roll number and name implementing Comparable.
+Override the compareTo() method to sort by roll number.
+Create a NameComparator class implementing Comparator to sort by name.
+Use Collections.sort() to display the sorted student details.
+
+
+Result:
+Thus, the Java program using Comparable and Comparator 
+interfaces was successfully executed.
+
+
+## program 13
+
+import java.util.*;
+
+class Student implements Comparable<Student> {
+    int roll;
+    String name;
+
+    Student(int r, String n) {
+        roll = r;
+        name = n;
+    }
+
+    public int compareTo(Student s) {
+        return roll - s.roll;
+    }
+
+    public String toString() {
+        return roll + " " + name;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        ArrayList<Student> list = new ArrayList<>();
+
+        list.add(new Student(103, "Ravi"));
+        list.add(new Student(101, "Arun"));
+        list.add(new Student(102, "Gokul"));
+
+        Collections.sort(list);
+        System.out.println("By Roll: " + list);
+
+        list.sort((a, b) -> a.name.compareTo(b.name));
+        System.out.println("By Name: " + list);
+    }
+}
+
