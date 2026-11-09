@@ -1,0 +1,65 @@
+Experiment No. 07 
+
+
+Aim:
+To develop a Java application using
+built-in and user-defined packages.
+
+
+
+Procedure:
+Create a user-defined package named employee.
+Create an Employee class with ID, name and salary.
+Import the package and get employee details using Scanner.
+Create an object and display the employee details.
+
+
+Result:
+Thus, the Java program using built-in and user-defined
+packages was successfully executed.
+
+##PROGRAM
+
+##Employee.java
+
+package employee;
+
+public class Employee {
+    int id;
+    String name;
+
+    public Employee(int i, String n) {
+        id = i;
+        name = n;
+    }
+
+    public void display() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+    }
+}
+
+
+## Main.java
+
+
+import employee.Employee;
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter ID: ");
+        int id = sc.nextInt();
+
+        sc.nextLine();
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        Employee e = new Employee(id, name);
+        e.display();
+
+        sc.close();
+    }
+}
