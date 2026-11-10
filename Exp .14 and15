@@ -1,0 +1,86 @@
+## EXP14
+
+Aim:
+To develop a Java program to perform file operations using
+I/O streams, readers, writers, and buffered streams.
+
+
+Procedure:
+Create a Java program.
+Create a file using FileWriter.
+Write data using BufferedWriter.
+Read the file using BufferedReader and display the output.
+
+
+Result:
+Thus, the Java program was executed successfully and file reading 
+and writing operations were performed using buffered streams.
+
+## PROGRAM 14
+
+import java.io.*;
+
+class FileDemo {
+    public static void main(String[] args) throws Exception {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("data.txt"));
+        bw.write("Welcome to Java File Handling");
+        bw.close();
+
+        BufferedReader br = new BufferedReader(new FileReader("data.txt"));
+        String s;
+        while ((s = br.readLine()) != null) {
+            System.out.println(s);
+        }
+        br.close();
+    }
+}
+
+
+## EXP 15
+
+
+Aim:
+To develop a Java program to store and retrieve objects using serialization 
+and deserialization.
+
+
+Procedure:
+Create a class implementing Serializable.
+Create an object and assign values.
+Save the object using ObjectOutputStream.
+Retrieve the object using ObjectInputStream and display it.
+
+
+Result:
+Thus, the Java program was executed successfully to perform serialization 
+and deserialization of objects.
+
+
+
+## PROGRAM 15
+
+
+import java.io.*;
+
+class Student implements Serializable {
+    int id = 101;
+    String name = "Gokul";
+
+    public static void main(String[] args) throws Exception {
+        Student s = new Student();
+
+        ObjectOutputStream out = new ObjectOutputStream(
+            new FileOutputStream("data.txt"));
+        out.writeObject(s);
+        out.close();
+
+        ObjectInputStream in = new ObjectInputStream(
+            new FileInputStream("data.txt"));
+        Student obj = (Student) in.readObject();
+
+        System.out.println(obj.id);
+        System.out.println(obj.name);
+        in.close();
+    }
+}
+
