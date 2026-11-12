@@ -1,0 +1,287 @@
+Experiment 5 – Data Preprocessing
+
+
+Aim:
+To apply suitable preprocessing
+techniques to a sample Housing dataset.
+
+
+
+Procedure:
+Import libraries and load the dataset.
+Explore the dataset and identify missing values.
+Encode categorical data and remove duplicates.
+Display the cleaned dataset.
+
+
+Program 5 :
+
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
+df = pd.read_csv('Housing.csv')
+
+print(df.head())
+print(df.isnull().sum())
+
+for col in df.columns:
+    if df[col].dtype == 'object':
+        df[col] = df[col].fillna(df[col].mode()[0])
+        df[col] = LabelEncoder().fit_transform(df[col])
+    else:
+        df[col] = df[col].fillna(df[col].mean())
+
+df = df.drop_duplicates()
+print(df.head())
+
+
+Result:
+Thus, the Housing dataset was successfully preprocessed by handling missing 
+values, encoding categorical data and removing duplicates.
+
+
+Experiment 6 – Principal Component Analysis (PCA)
+
+Aim:
+To perform dimensionality reduction using PCA on the Wine Quality dataset
+
+
+Procedure:
+Import libraries and load the dataset.
+Separate features and target variables.
+Standardize the data and apply PCA.
+Display the reduced data and explained variance.
+
+
+Program 6 :
+
+
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+df = pd.read_csv('winequality-red.csv',sep=';')
+
+X = df.drop('quality',axis=1)
+y = df['quality']
+
+X = StandardScaler().fit_transform(X)
+
+pca = PCA(n_components=2)
+result = pca.fit_transform(X)
+
+print("PCA Data:")
+print(result[:5])
+
+print("Variance:",pca.explained_variance_ratio_)
+print("Total:",sum(pca.explained_variance_ratio_))
+
+
+Result:
+Thus, dimensionality reduction was successfully performed 
+using PCA while retaining important information.
+
+
+
+Experiment 7 – Naive Bayes Classifier
+
+
+Aim:
+To implement a Naive Bayes classifier for spam message
+classification.
+
+
+Procedure:
+Import libraries and load the spam dataset.
+Convert text messages into numerical values.
+Split the dataset into training and testing data.
+Train the model and calculate accuracy.
+
+
+Program 7 :
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import accuracy_score
+
+df = pd.read_csv('spam.csv',encoding='latin-1')
+df = df[['v1','v2']]
+df.columns = ['label','message']
+
+X = CountVectorizer().fit_transform(df['message'])
+y = df['label'].map({'ham':0,'spam':1})
+
+a,b,c,d = train_test_split(X,y,test_size=0.2)
+
+model = MultinomialNB()
+model.fit(a,c)
+
+pred = model.predict(b)
+print("Accuracy:",accuracy_score(d,pred))
+
+
+
+Result:
+Thus, the Naive Bayes classifier was successfully
+implemented for spam message classification.
+
+
+Experiment 8 – Linear and Logistic Regression
+
+
+Aim:
+To develop a prediction system using Linear Regression and Logistic 
+Regression.
+
+
+Procedure:
+Import libraries and load the dataset.
+Encode categorical values and select features.
+Train Linear and Logistic Regression models.
+Predict results and calculate accuracy.
+
+
+Program 8 :
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder,StandardScaler
+from sklearn.linear_model import LinearRegression,LogisticRegression
+from sklearn.metrics import mean_squared_error,accuracy_score
+
+df = pd.read_csv('student-mat.csv',delimiter=';')
+
+for col in df.select_dtypes(include='object'):
+    df[col] = LabelEncoder().fit_transform(df[col])
+
+X = df.drop('G3',axis=1)
+y = df['G3']
+
+a,b,c,d = train_test_split(X,y,test_size=0.2)
+
+model = LinearRegression()
+model.fit(a,c)
+print("MSE:",mean_squared_error(d,model.predict(b)))
+
+df['pass'] = (df['G3']>=10).astype(int)
+X = StandardScaler().fit_transform(X)
+a,b,c,d = train_test_split(X,df['pass'],test_size=0.2)
+
+model = LogisticRegression(max_iter=1000)
+model.fit(a,c)
+print("Accuracy:",accuracy_score(d,model.predict(b)))
+
+
+Result:
+Thus, Linear Regression and Logistic Regression were
+successfully implemented for prediction and classification.
+
+
+
+
+Experiment 9 – Artificial Neural Network
+
+
+Aim:
+To develop a classification model using Artificial Neural Networks
+
+
+
+Procedure:
+Import libraries and load the dataset.
+Separate input and target variables.
+Scale the data and train the ANN model.
+Predict the results and calculate accuracy.
+
+
+
+Program 9 :
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score
+
+df = pd.read_csv('heart.csv')
+
+X = df.drop('target',axis=1)
+y = df['target']
+
+a,b,c,d = train_test_split(X,y,test_size=0.2)
+
+sc = StandardScaler()
+a = sc.fit_transform(a)
+b = sc.transform(b)
+
+model = MLPClassifier(hidden_layer_sizes=(10,10),
+                      max_iter=500)
+model.fit(a,c)
+
+pred = model.predict(b)
+print("Accuracy:",accuracy_score(d,pred))
+
+
+Result:
+Thus, the Artificial Neural Network classifier was 
+successfully implemented and its accuracy was evaluated.
+
+
+
+
+
+Experiment 10 – K-Means Clustering
+
+
+Aim:
+To implement K-Means clustering for segmenting customer 
+data based on spending behaviour.
+
+
+
+Procedure:
+Import libraries and load the customer dataset.
+Select suitable features for clustering.
+Apply the Elbow method to find the optimal clusters.
+Perform K-Means clustering and visualize the results.
+
+
+Program 10 :
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+
+df = pd.read_csv('Wholesale customers data.csv')
+
+X = df[['Milk','Grocery']]
+
+wcss = []
+for i in range(1,11):
+    model = KMeans(n_clusters=i,random_state=42,n_init=10)
+    model.fit(X)
+    wcss.append(model.inertia_)
+
+plt.plot(range(1,11),wcss,marker='o')
+plt.show()
+
+model = KMeans(n_clusters=5,random_state=42,n_init=10)
+y = model.fit_predict(X)
+
+plt.scatter(X['Milk'],X['Grocery'],c=y)
+plt.scatter(model.cluster_centers_[:,0],
+            model.cluster_centers_[:,1],marker='X')
+plt.show()
+
+
+
+Result:
+Thus, the K-Means clustering algorithm was successfully implemented 
+to segment customers into different groups.
+
