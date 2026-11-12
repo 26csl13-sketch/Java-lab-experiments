@@ -1,0 +1,226 @@
+Experiment 1 – Statistical Operations using Pandas
+
+Aim:
+To create a sample dataset, perform statistical operations
+using Pandas and visualize the results using Matplotlib.
+
+Procedure:
+Import Pandas, NumPy and Matplotlib.
+Create a sample dataset using random values.
+Perform statistical operations using Pandas.
+Visualize the results using graphs.
+
+
+Program 1 – Scenario 1: Hostel Electricity
+
+import pandas as pd
+import random
+import matplotlib.pyplot as plt
+
+data = []
+for i in range(10):
+    data.append([random.randint(50,150),
+                 random.randint(100,300)])
+
+df = pd.DataFrame(data, columns=['Residents','Units'])
+print(df)
+print(df.describe())
+
+df.groupby('Residents')['Units'].mean().plot(kind='bar')
+plt.show()
+
+
+Program 1 – Scenario 2: Online Course Engagement
+
+
+import pandas as pd
+import random
+import matplotlib.pyplot as plt
+
+data = []
+for i in range(10):
+    data.append([random.randint(10,500),
+                 random.randint(40,100)])
+
+df = pd.DataFrame(data, columns=['VideoMinutes','QuizScore'])
+print(df)
+print(df.describe())
+
+plt.scatter(df['VideoMinutes'], df['QuizScore'])
+plt.show()
+
+
+Result:
+Thus, the sample datasets were successfully created, analyzed and
+visualized using Pandas and Matplotlib.
+
+
+
+
+Experiment 2 – Uninformed Search Strategies
+
+
+Aim:
+To implement uninformed search strategies using BFS and DFS 
+for different problems.
+
+
+Procedure:
+Define the problem and initial state.
+Initialize the required search data structure.
+Explore possible states using BFS or DFS.
+Display the solution or result.
+
+
+2.1 Walls and Gates
+Program:
+
+from collections import deque
+
+def solve(grid):
+    q = deque()
+    m, n = len(grid), len(grid[0])
+
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == 0:
+                q.append((i,j))
+
+    while q:
+        x,y = q.popleft()
+        for dx,dy in [(0,1),(0,-1),(1,0),(-1,0)]:
+            a,b = x+dx,y+dy
+            if 0<=a<m and 0<=b<n and grid[a][b]==999:
+                grid[a][b] = grid[x][y]+1
+                q.append((a,b))
+
+grid = [[999,-1,0,999],
+        [999,999,999,-1],
+        [999,-1,999,-1],
+        [0,-1,999,999]]
+
+solve(grid)
+for row in grid:
+    print(row)
+
+
+
+2.2 Minimum Cost to Make Path
+Program:
+
+
+from collections import deque
+
+def minCost(grid):
+    m,n = len(grid),len(grid[0])
+    d = [[999]*n for _ in range(m)]
+    q = deque([(0,0)])
+    d[0][0] = 0
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+
+    while q:
+        x,y = q.popleft()
+        for i,(dx,dy) in enumerate(dirs):
+            a,b = x+dx,y+dy
+            if 0<=a<m and 0<=b<n:
+                c = d[x][y] + (grid[x][y] != i+1)
+                if c < d[a][b]:
+                    d[a][b] = c
+                    if c == d[x][y]:
+                        q.appendleft((a,b))
+                    else:
+                        q.append((a,b))
+
+    return d[-1][-1]
+
+print(minCost([[1,1,3],[3,2,2],[1,1,4]]))
+
+
+
+
+2.3 Word Search using Trie
+Program:
+
+
+
+def findWords(board, words):
+    result = []
+
+    def dfs(r,c,w,path):
+        if not w:
+            result.append(path)
+            return
+        if r<0 or c<0 or r>=len(board) or c>=len(board[0]):
+            return
+        if board[r][c] != w[0]:
+            return
+
+        ch = board[r][c]
+        board[r][c] = '#'
+        for dr,dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+            dfs(r+dr,c+dc,w[1:],path+ch)
+        board[r][c] = ch
+
+    for w in words:
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                dfs(i,j,w,"")
+    return list(set(result))
+
+b = [['o','a','t'],['e','t','a'],['a','n','e']]
+print(findWords(b,['oat','eat','tea']))
+
+
+
+2.4 Word Search
+Program:
+
+
+def exist(board, word):
+    def dfs(r,c,i):
+        if i == len(word):
+            return True
+        if r<0 or c<0 or r>=len(board) or c>=len(board[0]):
+            return False
+        if board[r][c] != word[i]:
+            return False
+
+        ch = board[r][c]
+        board[r][c] = '#'
+        ans = (dfs(r+1,c,i+1) or dfs(r-1,c,i+1)
+               or dfs(r,c+1,i+1) or dfs(r,c-1,i+1))
+        board[r][c] = ch
+        return ans
+
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if dfs(i,j,0):
+                return True
+    return False
+
+b = [['A','B','C'],['S','F','C'],['A','D','E']]
+print(exist(b,"ABCCED"))
+
+
+2.5 Jump Game III
+Program:
+
+
+def canReach(arr, start):
+    if start<0 or start>=len(arr) or arr[start]<0:
+        return False
+    if arr[start] == 0:
+        return True
+
+    jump = arr[start]
+    arr[start] = -1
+    return (canReach(arr,start+jump) or
+            canReach(arr,start-jump))
+
+arr = [4,2,3,0,3,1,2]
+print(canReach(arr,5))
+
+
+Result: Thus, the uninformed search algorithms were implemented 
+successfully, and the 
+required solutions were obtained.
