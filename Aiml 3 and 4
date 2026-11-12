@@ -1,0 +1,190 @@
+Experiment 3 – Local Search Algorithm
+
+Aim:
+To find solutions for given problems using
+state space search techniques.
+
+
+Procedure:
+Read the initial state and goal state.
+Generate possible next states.
+Check the visited states and goal condition.
+Display the solution.
+
+
+
+3.1 Water Jug Problem
+Program:
+
+from collections import deque
+
+def water_jug(x,y,z):
+    q = deque([(0,0)])
+    visited = set()
+
+    while q:
+        a,b = q.popleft()
+        if (a,b) in visited:
+            continue
+        visited.add((a,b))
+
+        if a==z or b==z:
+            return True
+
+        t = min(a,y-b)
+        s = min(b,x-a)
+
+        q.extend([(x,b),(a,y),(0,b),(a,0),
+                  (a-t,b+t),(a+s,b-s)])
+    return False
+
+print(water_jug(4,3,2))
+
+
+3.2 Monkey and Banana Problem
+Program:
+
+
+monkey = input("Monkey position: ")
+box = input("Box position: ")
+banana = input("Banana position: ")
+
+print("Initial State:",monkey,box,banana)
+
+monkey = box
+print("Monkey moves to box")
+
+box = banana
+monkey = banana
+print("Monkey pushes box")
+
+print("Monkey climbs the box")
+print("Monkey grasps banana")
+print("Goal Achieved!")
+
+
+monkey = input("Monkey position: ")
+box = input("Box position: ")
+banana = input("Banana position: ")
+
+print("Initial State:",monkey,box,banana)
+
+monkey = box
+print("Monkey moves to box")
+
+box = banana
+monkey = banana
+print("Monkey pushes box")
+
+print("Monkey climbs the box")
+print("Monkey grasps banana")
+print("Goal Achieved!")
+
+Result 3: 
+Thus, local search algorithms were implemented 
+successfully, and the required solutions were obtained.
+
+
+
+Experiment 4 – Constraint Satisfaction Problem
+
+
+Aim:
+To solve Constraint Satisfaction Problems
+using backtracking algorithms.
+
+
+Procedure:
+Define the problem and constraints.
+Initialize the required variables.
+Apply backtracking to find a valid solution.
+Display the final solution.
+
+
+4.1 N-Queens Problem
+Program:
+
+
+def solve(n):
+    board = [-1]*n
+
+    def backtrack(r):
+        if r == n:
+            return True
+
+        for c in range(n):
+            if all(board[i]!=c and
+                   abs(board[i]-c)!=r-i
+                   for i in range(r)):
+                board[r] = c
+                if backtrack(r+1):
+                    return True
+        return False
+
+    if backtrack(0):
+        for c in board:
+            print('. '*c+'Q '+' . '*(n-c-1))
+    else:
+        print("No solution")
+
+solve(4)
+
+
+
+4.2 Sudoku Solver
+Program:
+
+def solve(b):
+    for r in range(9):
+        for c in range(9):
+            if b[r][c] == 0:
+                for n in range(1,10):
+                    if (n not in b[r] and
+                        all(b[i][c]!=n for i in range(9)) and
+                        all(b[i][j]!=n
+                            for i in range(r//3*3,r//3*3+3)
+                            for j in range(c//3*3,c//3*3+3))):
+                        b[r][c] = n
+                        if solve(b):
+                            return True
+                        b[r][c] = 0
+                return False
+    return True
+
+b = [[0]*9 for _ in range(9)]
+print(solve(b)) 
+
+
+4.3 Map Coloring Problem
+Program:
+
+
+def color(graph,m):
+    n = len(graph)
+    colors = [0]*n
+
+    def solve(v):
+        if v == n:
+            return True
+        for c in range(1,m+1):
+            if all(not graph[v][i] or colors[i]!=c
+                   for i in range(n)):
+                colors[v] = c
+                if solve(v+1):
+                    return True
+                colors[v] = 0
+        return False
+
+    if solve(0):
+        print(colors)
+    else:
+        print("No solution")
+
+g = [[0,1,1],[1,0,1],[1,1,0]]
+color(g,3)
+
+
+Result 4: Thus, constraint satisfaction problems were implemented 
+successfully, and the required solutions were obtained.
+
+
