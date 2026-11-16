@@ -1,0 +1,562 @@
+1. Music Playlist using Singly Linked List
+
+Aim
+To implement a music playlist using a singlylinked list with add, 
+remove, move-up, move-down and display operations.
+
+Procedure / Algorithm
+1.	Create a node containing song name and next pointer.
+2.	Insert new songs at the end of the list.
+3.	Search and unlink a song to remove it.
+4.	Change links with the previous/next node to move a song up or down.
+5.	Traverse from head to display the playlist.
+
+
+Program 1 (C)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct Node { char song[50]; struct Node *next; } Node;
+Node *head=NULL;
+void add(char s[]) {
+    Node *n=malloc(sizeof(Node)), *t=head;
+    strcpy(n->song,s); n->next=NULL;
+    if(!head) head=n;
+    else { while(t->next) t=t->next; t->next=n; }
+}
+void removeSong(char s[]) {
+    Node *t=head,*p=NULL;
+    while(t && strcmp(t->song,s)) { p=t; t=t->next; }
+    if(!t) return;
+    if(p) p->next=t->next; else head=t->next;
+    free(t);
+}
+void moveUp(char s[]) {
+    Node *t=head,*p=NULL,*pp=NULL;
+    while(t && strcmp(t->song,s)) { pp=p; p=t; t=t->next; }
+    if(!t || !p) return;
+    p->next=t->next; t->next=p;
+    if(pp) pp->next=t; else head=t;
+}
+void moveDown(char s[]) {
+    Node *t=head,*p=NULL,*n;
+    while(t && strcmp(t->song,s)) { p=t; t=t->next; }
+    if(!t || !t->next) return;
+    n=t->next; t->next=n->next; n->next=t;
+    if(p) p->next=n; else head=n;
+}
+void display() {
+    Node *t=head;
+    while(t) { printf("%s ",t->song); t=t->next; }
+    printf("\n");
+}
+int main() {
+    add("Song A"); add("Song B"); add("Song C");
+    display(); moveUp("Song C"); display();
+    moveDown("Song A"); display(); removeSong("Song B"); display();
+    return 0;
+}
+
+
+
+Result
+Thus, the music playlist was implemented successfully using a singly 
+linked list, and songs were added, removed and rearranged.
+
+
+
+
+2. Browser Back and Forward using Stacks
+
+
+Aim
+To implement browser Back and Forward navigation using two stacks.
+
+
+Procedure / Algorithm
+6.	Create Back and Forward stacks and set the home page as current.
+7.	When visiting a page, push the current page onto Back and clear Forward.
+8.	For Back, push current page onto Forward and pop Back.
+9.	For Forward, push current page onto Back and pop Forward.
+10.	Display the current page after each operation.
+
+
+Program 2 (C)
+#include <stdio.h>
+#include <string.h>
+#define N 20
+char back[N][40], forward[N][40], current[40]="Home";
+int topB=-1, topF=-1;
+void visit(char page[]) {
+    strcpy(back[++topB],current); topF=-1; strcpy(current,page);
+}
+void goBack() {
+    if(topB<0) { puts("No back page"); return; }
+    strcpy(forward[++topF],current); strcpy(current,back[topB--]);
+}
+void goForward() {
+    if(topF<0) { puts("No forward page"); return; }
+    strcpy(back[++topB],current); strcpy(current,forward[topF--]);
+}
+int main() {
+    visit("Google"); visit("Wikipedia"); visit("YouTube");
+    printf("Current: %s\n",current);
+    goBack(); printf("Back: %s\n",current);
+    goBack(); printf("Back: %s\n",current);
+    goForward(); printf("Forward: %s\n",current);
+    return 0;
+}
+
+
+
+Result
+Thus, browser Back and Forward operations were 
+implemented successfully using two stacks.
+
+
+
+3. Bank Counter Simulation using Queue ADT
+
+
+Aim
+To implement a queue using an array and simulate customer arrival and
+service at a bank counter.
+
+
+Procedure / Algorithm
+11.	Initialize front and rear to -1.
+12.	For arrival, check overflow, update rear and insert the token.
+13.	For service, check underflow, remove the front token and update front.
+14.	Display all waiting customers from front to rear.
+15.	Repeat until the user selects Exit.
+
+
+Program 3 (C)
+#include <stdio.h>
+#define MAX 5
+int q[MAX], front=-1, rear=-1;
+void enqueue(int x) {
+    if(rear==MAX-1) puts("Queue Overflow");
+    else { if(front==-1) front=0; q[++rear]=x; printf("Customer %d arrived\n",x); }
+}
+void dequeue() {
+    if(front==-1) puts("Queue is empty");
+    else {
+        printf("Customer %d served\n",q[front]);
+        if(front==rear) front=rear=-1; else front++;
+    }
+}
+void display() {
+    int i;
+    if(front==-1) puts("Queue is empty");
+    else { for(i=front;i<=rear;i++) printf("%d ",q[i]); puts(""); }
+}
+int main() {
+    int ch,x;
+    do {
+        printf("\n1.Arrival 2.Serve 3.Display 4.Exit: ");
+        scanf("%d",&ch);
+        if(ch==1) { printf("Token: "); scanf("%d",&x); enqueue(x); }
+        else if(ch==2) dequeue();
+        else if(ch==3) display();
+    } while(ch!=4);
+    return 0;
+}
+
+
+
+Result
+Thus, the bank queue was implemented successfully using enqueue and dequeue operations.
+
+
+
+
+
+4. Bubble Sort and Insertion Sort
+
+
+Aim
+To implement Bubble Sort and Insertion Sort to arrange array
+elements in ascending order.
+
+
+Procedure / Algorithm
+16.	Read n and the array elements.
+17.	For Bubble Sort, compare adjacent elements and swap if they are in the wrong order.
+18.	For Insertion Sort, take each element as key and shift larger elements right.
+19.	Select the required sorting method.
+20.	Display the sorted array.
+
+
+Program 4 (C)
+#include <stdio.h>
+void bubble(int a[],int n) {
+    int i,j,t;
+    for(i=0;i<n-1;i++)
+        for(j=0;j<n-i-1;j++)
+            if(a[j]>a[j+1]) { t=a[j]; a[j]=a[j+1]; a[j+1]=t; }
+}
+void insertion(int a[],int n) {
+    int i,j,key;
+    for(i=1;i<n;i++) {
+        key=a[i]; j=i-1;
+        while(j>=0 && a[j]>key) { a[j+1]=a[j]; j--; }
+        a[j+1]=key;
+    }
+}
+int main() {
+    int a[100],n,i,ch;
+    scanf("%d",&n);
+    for(i=0;i<n;i++) scanf("%d",&a[i]);
+    printf("1.Bubble 2.Insertion: "); scanf("%d",&ch);
+    if(ch==1) bubble(a,n); else if(ch==2) insertion(a,n);
+    else { puts("Invalid choice"); return 0; }
+    for(i=0;i<n;i++) printf("%d ",a[i]);
+    return 0;
+}
+
+
+
+
+
+Result
+Thus, Bubble Sort and Insertion Sort were implemented successfully 
+and the array was sorted in ascending order.
+
+
+
+
+5. Shell Sort
+
+
+Aim
+To implement Shell Sort to arrange a list of 
+integers in ascending order.
+
+
+
+
+Procedure / Algorithm
+21.	Read the number of elements and array values.
+22.	Set gap = n/2.
+23.	Compare elements separated by the gap and shift larger elements.
+24.	Reduce the gap by half and repeat until gap becomes zero.
+25.	Display the sorted array.
+
+
+
+Program 5 (C)
+#include <stdio.h>
+int main() {
+    int a[100],n,i,j,gap,temp;
+    scanf("%d",&n);
+    for(i=0;i<n;i++) scanf("%d",&a[i]);
+    for(gap=n/2;gap>0;gap/=2)
+        for(i=gap;i<n;i++) {
+            temp=a[i];
+            for(j=i;j>=gap && a[j-gap]>temp;j-=gap)
+                a[j]=a[j-gap];
+            a[j]=temp;
+        }
+    for(i=0;i<n;i++) printf("%d ",a[i]);
+    return 0;
+}
+
+
+Result
+Thus, Shell Sort was implemented successfully and 
+the given elements were arranged in ascending order.
+
+
+
+
+6. Linear Search and Binary Search
+
+
+Aim
+To implement Linear Search and Binary Search to
+locate a given element in an array.
+
+
+Procedure / Algorithm
+26.	Read the array elements and the search key.
+27.	Linear Search checks each element until the key is found or the array ends.
+28.	Binary Search requires a sorted array; find the middle
+element and compare it with the key.
+
+29.	Adjust low or high based on the comparison and repeat.
+30.	Display the position if found; otherwise display not found.
+
+
+Program 6 (C)
+#include <stdio.h>
+int linear(int a[],int n,int k) {
+    int i;
+    for(i=0;i<n;i++) if(a[i]==k) return i;
+    return -1;
+}
+int binary(int a[],int n,int k) {
+    int l=0,h=n-1,m;
+    while(l<=h) {
+        m=(l+h)/2;
+        if(a[m]==k) return m;
+        if(k<a[m]) h=m-1; else l=m+1;
+    }
+    return -1;
+}
+int main() {
+    int a[100],n,i,k,ch,p;
+    scanf("%d",&n);
+    for(i=0;i<n;i++) scanf("%d",&a[i]);
+    printf("Key: "); scanf("%d",&k);
+    printf("1.Linear 2.Binary: "); scanf("%d",&ch);
+    p=(ch==1)?linear(a,n,k):binary(a,n,k);
+    if(p>=0) printf("Found at position %d",p+1);
+    else puts("Element not found");
+    return 0;
+}
+
+
+
+
+Result
+Thus, Linear Search and Binary Search were implemented 
+successfully. Binary Search is used with sorted input.
+
+
+
+
+
+7. Hash Table for Books using ISBN
+
+
+Aim
+To implement a hash table to store and 
+search books using ISBN as the key.
+
+
+
+Procedure / Algorithm
+31.	Define a Book structure with ISBN, title and occupied status.
+32.	Create a hash table of fixed size and use ISBN % SIZE as the hash function.
+33.	Insert a book at the calculated index; use linear probing if occupied.
+34.	Search from the calculated index until the ISBN is found or an empty slot is reached.
+35.	Display the stored books.
+
+
+
+
+Program 7 (C)
+#include <stdio.h>
+#include <string.h>
+#define SIZE 10
+struct Book { int isbn, used; char title[50]; } h[SIZE];
+int hash(int x) { return x%SIZE; }
+void insert(int id,char name[]) {
+    int i=hash(id),start=i;
+    while(h[i].used && h[i].isbn!=id) {
+        i=(i+1)%SIZE; if(i==start) { puts("Table full"); return; }
+    }
+    h[i].isbn=id; strcpy(h[i].title,name); h[i].used=1;
+}
+void search(int id) {
+    int i=hash(id),start=i;
+    while(h[i].used) {
+        if(h[i].isbn==id) { printf("%s\n",h[i].title); return; }
+        i=(i+1)%SIZE; if(i==start) break;
+    }
+    puts("Book not found");
+}
+int main() {
+    int ch,id,i; char name[50];
+    do {
+        printf("1.Insert 2.Search 3.Display 4.Exit: "); scanf("%d",&ch);
+        if(ch==1) { scanf("%d",&id); scanf(" %49[^\n]",name); insert(id,name); }
+        else if(ch==2) { scanf("%d",&id); search(id); }
+        else if(ch==3) for(i=0;i<SIZE;i++)
+            if(h[i].used) printf("%d %d %s\n",i,h[i].isbn,h[i].title);
+    } while(ch!=4);
+    return 0;
+}
+
+
+
+Result
+Thus, the hash table was implemented successfully to store and 
+search books using ISBN and linear probing.
+
+
+
+8. File System Representation using Tree
+
+
+Aim
+To represent a file system using a tree and perform insertion, 
+deletion of leaf nodes and preorder traversal.
+
+
+
+Procedure / Algorithm
+36.	Define each node with name, first-child pointer and next-sibling pointer.
+37.	Create the root directory named Root.
+38.	Search for the parent and insert a new child at the end of its child list.
+39.	Delete only a leaf node after locating its parent and unlinking it.
+40.	Use preorder traversal to display the tree.
+
+
+Program 8 (C)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct Node { char name[50]; struct Node *child,*sibling; } Node;
+Node *create(char s[]) {
+    Node *n=malloc(sizeof(Node)); strcpy(n->name,s);
+    n->child=n->sibling=NULL; return n;
+}
+Node *find(Node *r,char s[]) {
+    Node *p; if(!r) return NULL;
+    if(!strcmp(r->name,s)) return r;
+    p=find(r->child,s); return p?p:find(r->sibling,s);
+}
+void insert(Node *r,char parent[],char name[]) {
+    Node *p=find(r,parent),*n,*t;
+    if(!p) { puts("Parent not found"); return; }
+    n=create(name);
+    if(!p->child) p->child=n;
+    else { t=p->child; while(t->sibling) t=t->sibling; t->sibling=n; }
+}
+void deleteLeaf(Node *r,char parent[],char name[]) {
+    Node *p=find(r,parent),*t,*prev=NULL;
+    if(!p) { puts("Parent not found"); return; }
+    t=p->child;
+    while(t && strcmp(t->name,name)) { prev=t; t=t->sibling; }
+    if(!t || t->child) { puts("Leaf not found"); return; }
+    if(prev) prev->sibling=t->sibling; else p->child=t->sibling;
+    free(t); puts("Deleted");
+}
+void show(Node *r,int level) {
+    int i; if(!r) return;
+    for(i=0;i<level;i++) printf(" ");
+    printf("%s\\n",r->name);
+    show(r->child,level+2); show(r->sibling,level);
+}
+int main() {
+    Node *root=create("Root"); int ch; char p[50],n[50];
+    do {
+        printf("1.Insert 2.Delete leaf 3.Display 4.Exit: "); scanf("%d",&ch);
+        if(ch==1) { scanf("%49s%49s",p,n); insert(root,p,n); }
+        else if(ch==2) { scanf("%49s%49s",p,n); deleteLeaf(root,p,n); }
+        else if(ch==3) show(root,0);
+    } while(ch!=4);
+    return 0;
+}
+
+
+
+Result
+Thus, the file system was represented successfully
+using a tree, and insertion and preorder display were performed.
+
+
+
+9. Dijkstra's Shortest Path Algorithm
+
+
+
+Aim
+To represent cities and roads as a weighted graph and find 
+shortest distances from a source city using Dijkstra's algorithm.
+
+
+
+Procedure / Algorithm
+41.	Represent the graph using an adjacency matrix; zero indicates no direct road.
+42.	Initialize all distances to infinity except the source distance as zero.
+43.	Select the unvisited vertex with the minimum distance.
+44.	Update distances of its adjacent vertices if a shorter path is found.
+45.	Repeat and display the shortest distances.
+
+
+Program 9 (C)
+#include <stdio.h>
+#define V 5
+#define INF 9999
+int main() {
+    int g[V][V]={{0,4,0,0,8},{4,0,8,0,0},{0,8,0,7,0},
+                 {0,0,7,0,9},{8,0,0,9,0}};
+    int d[V],vis[V]={0},i,j,u,min;
+    for(i=0;i<V;i++) d[i]=INF;
+    d[0]=0;
+    for(i=0;i<V-1;i++) {
+        min=INF; u=-1;
+        for(j=0;j<V;j++) if(!vis[j] && d[j]<min) { min=d[j]; u=j; }
+        if(u==-1) break;
+        vis[u]=1;
+        for(j=0;j<V;j++)
+            if(!vis[j] && g[u][j] && d[u]+g[u][j]<d[j])
+                d[j]=d[u]+g[u][j];
+    }
+    for(i=0;i<V;i++) printf("%d %d\n",i,d[i]);
+    return 0;
+}
+
+
+Result
+Thus, Dijkstra's algorithm was implemented successfully to find the shortest 
+distances from the source city to all other cities.
+
+
+
+
+
+10. Prim's Minimum Spanning Tree
+
+
+Aim
+To implement Prim's algorithm to find the Minimum 
+Spanning Tree of a weighted connected graph.
+
+
+
+Procedure / Algorithm
+46.	Represent the graph using an adjacency matrix.
+47.	Initialize key values to infinity, mark all vertices unselected and set key[0] to zero.
+48.	Select the unselected vertex with the minimum key and include it in the MST.
+49.	Update the keys and parent values of adjacent unselected vertices when a smaller edge is found.
+50.	Display the MST edges and their total weight.
+
+
+
+
+Program 10 (C)
+#include <stdio.h>
+#define V 5
+#define INF 9999
+int main() {
+    int g[V][V]={{0,2,0,6,0},{2,0,3,8,5},{0,3,0,0,7},
+                 {6,8,0,0,9},{0,5,7,9,0}};
+    int key[V],parent[V],set[V]={0},i,j,u,min,total=0;
+    for(i=0;i<V;i++) key[i]=INF;
+    key[0]=0; parent[0]=-1;
+    for(i=0;i<V-1;i++) {
+        min=INF; u=-1;
+        for(j=0;j<V;j++) if(!set[j] && key[j]<min) { min=key[j]; u=j; }
+        if(u==-1) break;
+        set[u]=1;
+        for(j=0;j<V;j++)
+            if(g[u][j] && !set[j] && g[u][j]<key[j]) {
+                parent[j]=u; key[j]=g[u][j];
+            }
+    }
+    printf("Edge Weight\n");
+    for(i=1;i<V;i++) { printf("%d-%d %d\n",parent[i],i,g[i][parent[i]]); total+=g[i][parent[i]]; }
+    printf("Total weight = %d",total);
+    return 0;
+}
+
+
+
+Result
+Thus, Prim's algorithm was implemented successfully to construct the Minimum Spanning Tree. 
+The total weight of the given graph is 16.
+
